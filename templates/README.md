@@ -50,9 +50,8 @@ Import `rulesets/main.json` (Settings → Rules → Rulesets → New ruleset →
 ## Actions
 
 - Allow actions created by GitHub and by Marketplace verified creators, and require actions to be pinned to a full-length commit SHA
-- Default workflow permissions: read repository contents
-- Do not allow Actions to create or approve pull requests
-- Require approval for workflows from all outside contributors
+- Workflow permissions: keep GitHub's default for new repositories (read repository contents; Actions cannot create or approve pull requests). Workflows also declare their own permissions.
+- Fork pull request workflows: keep GitHub's default (approval required for first-time contributors). Fork runs get a read-only token, no secrets, and no access to deployment environments.
 
 ## Environments
 
