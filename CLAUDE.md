@@ -7,7 +7,7 @@ Shared engineering standards, community health files, and repository templates f
 | | |
 |---|---|
 | Jira project | `FND`: https://nathan-a-reed.atlassian.net/browse/FND (shared with `aws-foundation`) |
-| Confluence space | To be decided |
+| Confluence space | `ENG` (Engineering): https://nathan-a-reed.atlassian.net/wiki/spaces/ENG. The standards themselves live in this repository. |
 | Default branch | `main` |
 | Related repos | `aws-foundation`, `portfolio-site` (planned), `outage-atlas`, `nasa-rag` |
 
