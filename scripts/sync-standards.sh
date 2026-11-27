@@ -23,8 +23,10 @@ mkdir -p "$target_dir/docs/standards"
 find "$target_dir/docs/standards" -maxdepth 1 -name '*.md' -delete
 cp "$source_dir"/standards/*.md "$target_dir/docs/standards/"
 
+# Pull requests have no template, so remove copies added before the sync existed.
+rm -f "$target_dir/.github/pull_request_template.md"
+
 mkdir -p "$target_dir/.github/workflows"
-cp "$source_dir/templates/.github/pull_request_template.md" "$target_dir/.github/"
 
 caller="$target_dir/.github/workflows/pr-hygiene.yml"
 pattern='^(    uses: [^@]+/\.github/workflows/pr-hygiene\.yml)@.*$'

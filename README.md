@@ -23,7 +23,6 @@ Shared engineering standards and repository templates for every `nathan-a-reed` 
 | `standards/security.md` | `docs/standards/` | Secrets, access, data protection, edge, AI features, supply chain |
 | `standards/python.md` | `docs/standards/` | Lambda functions |
 | `standards/frontend.md` | `docs/standards/` | Astro and React applications, design system |
-| `templates/.github/pull_request_template.md` | `.github/` | Pull request template |
 | `templates/.github/workflows/pr-hygiene.yml` | `.github/workflows/` | Caller for the shared `PR hygiene` workflow, pinned to a commit SHA |
 | `templates/` | Various | Starting files and setup checklist for new repositories |
 

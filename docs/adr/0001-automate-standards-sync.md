@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Each project repository carries copies of `CONTRIBUTING.md`, `SECURITY.md`, `standards/`, the pull request template, and the `PR hygiene` workflow. Syncing them meant a hand-made pull request in every repository after each standards change, and copies drifted between syncs. Coding agents no longer open pull requests, so the owner would have to open every sync pull request by hand.
+Each project repository carries copies of `CONTRIBUTING.md`, `SECURITY.md`, `standards/`, and the `PR hygiene` workflow. Syncing them meant a hand-made pull request in every repository after each standards change, and copies drifted between syncs. Coding agents no longer open pull requests, so the owner would have to open every sync pull request by hand.
 
 ## Decision
 

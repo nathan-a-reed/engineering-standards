@@ -11,7 +11,7 @@ Checklist for creating a project repository.
 | `.claude/settings.json` | `.claude/settings.json` |
 | `.github/CODEOWNERS`, `.github/dependabot.yml` | `.github/` |
 
-`CONTRIBUTING.md`, `SECURITY.md`, `docs/standards/` (every standard; `CLAUDE.md` imports only those that apply), the pull request template, and the `PR hygiene` caller come from the standards sync instead: see [Standards sync](#standards-sync).
+`CONTRIBUTING.md`, `SECURITY.md`, `docs/standards/` (every standard; `CLAUDE.md` imports only those that apply), and the `PR hygiene` caller come from the standards sync instead: see [Standards sync](#standards-sync).
 
 Also add `docs/adr/0001-record-architecture-decisions.md`, a `.gitignore` that includes `.env` and `.env.*` (except `.env.example`), and a README following `engineering.md`.
 
