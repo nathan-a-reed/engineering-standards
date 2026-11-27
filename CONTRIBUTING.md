@@ -79,9 +79,7 @@ Commit messages and pull requests describe the change in a neutral voice. They d
 
 - Open pull requests as drafts and mark them ready for review when complete. Coding agents push branches but do not open pull requests; see the agent workflow standard, `agent-workflow.md`.
 - **Title:** Conventional Commits format with the ticket key at the end, at most 72 characters: `feat(web): add project cards [ABC-12]`. Maintenance titles have no key. The title becomes the squash commit on `main`.
-- **Description:** scales with the change. Summary, Jira, and Testing are always present. Add other sections only when relevant, and delete sections that do not apply rather than marking them N/A. Remove the template's guidance comments. UI changes include screenshots or `Not captured — <reason>`.
-- **Self-contained:** a reader without Jira access can tell what changed and why. Link the ticket by its full URL.
-- **Testing:** list only what was actually run, with results, and state what was not tested and why.
+- **Description:** free-form, with no required format.
 - **Size:** aim for under about 400 changed lines, excluding lockfiles and generated files. Explain anything larger or split it.
 - Merge only when required checks pass and conversations are resolved.
 
@@ -101,7 +99,7 @@ Every repository requires at least:
 - Tests are added or updated.
 - Docs and ADRs are updated where needed.
 - Branch, commits, and title follow this guide.
-- The pull request description is complete, and the CI result is known.
+- The CI result is known.
 
 ## Local development
 
