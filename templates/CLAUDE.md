@@ -94,7 +94,6 @@ Variables are documented in `.env.example`. Never commit `.env`.
 
 - Required CI checks: `PR hygiene`, <job names>
 - Merge strategy: squash merge
-- Extra checklist items: <e.g. screenshots for UI changes, notable `cdk diff` output>
 
 ## Confluence page map
 
