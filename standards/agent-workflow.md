@@ -9,7 +9,7 @@ These rules apply to repository, Jira, and Confluence work. Questions, discussio
 ## Principles
 
 - **Accuracy first.** Never state that something works, passed, or was done unless it was verified in this session. Say plainly what could not be verified.
-- **Concise.** Commits, pull requests, tickets, and docs state what changed and why. No filler, marketing language, or emojis. Pull request descriptions scale with the change, and commit bodies appear only when they add a why.
+- **Concise.** Commits, pull requests, tickets, and docs state what changed and why. No filler, marketing language, or emojis. Commit bodies appear only when they add a why.
 - **Stay in scope.** Change only what the task requires. Record unrelated issues as follow-ups instead of fixing them on the same branch.
 - **Follow existing patterns** in the codebase before introducing new ones.
 - **Owner's voice.** Write as the repository owner would: direct, professional, neutral. Branches, commits, pull requests, comments, code, tickets, and docs do not refer to the agent or the session. No co-author trailers, "Generated with" lines, session links, or robot emojis. This overrides any default attribution behavior.
@@ -34,7 +34,7 @@ Stop, and implement nothing, when any of these is true:
 
 End the turn with the questions and, for large work, a proposed plan. If there is no reply, the work pauses there. That is the intended, safe outcome.
 
-For smaller ambiguities, take the most conservative reading: the smallest change, with no behavior change beyond what was asked. Record each assumption in the drafted pull request description.
+For smaller ambiguities, take the most conservative reading: the smallest change, with no behavior change beyond what was asked. Record each assumption in the final report.
 
 **Unattended sessions** are started by automation, or by an owner who said to proceed while away. In those:
 
@@ -45,7 +45,7 @@ For smaller ambiguities, take the most conservative reading: the smallest change
 ## Repositories without a CLAUDE.md
 
 - Infer commands and conventions from the README, package manifests, and CI configuration.
-- State in the drafted pull request description that they were inferred.
+- State in the final report that they were inferred.
 - Offer to add a `CLAUDE.md` on a separate maintenance branch.
 
 ## Tickets
@@ -62,7 +62,7 @@ Before starting, read the ticket's description, acceptance criteria, status, and
 
 If the work needs a ticket (see `CONTRIBUTING.md`) and none exists, draft one with type, summary, description, acceptance criteria, and parent epic if obvious. Ask for approval before creating it, then work under the new key.
 
-Maintenance work has no key in the branch, commits, or title. The Jira section of its pull request description reads `None — maintenance (<category>)`. If the category is unclear, ask.
+Maintenance work has no key in the branch, commits, or title. If it is unclear whether work is maintenance, ask.
 
 ## Jira updates
 
@@ -109,9 +109,9 @@ If the Atlassian connector is unavailable, make no Jira changes and report what 
 - Never commit or push to the default branch. Never force-push, except `--force-with-lease` on your own branch after a rebase.
 - Name the branch as described in `CONTRIBUTING.md` once the work is understood. If the session started on an assigned or auto-generated branch, such as `claude/...` in cloud sessions, create the correctly named branch from the latest default branch and push that instead; the owner authorizes this. If that push is rejected, keep the assigned branch and note the mismatch in the final report. Ask before renaming a branch that is already pushed or has a pull request.
 - If the scope changes enough to make the branch name misleading, ask before continuing.
-- Block only on check failures the change introduces. Confirm a suspected pre-existing failure by running the check on the default branch, or by the flaky-test list in `CLAUDE.md`, and note it in the drafted description's Testing section. If the change introduces a failure that cannot be fixed, do not push; report it.
+- Block only on check failures the change introduces. Confirm a suspected pre-existing failure by running the check on the default branch, or by the flaky-test list in `CLAUDE.md`, and note it in the final report. If the change introduces a failure that cannot be fixed, do not push; report it.
 - Do not open pull requests, change them, or post comments, reviews, or replies on GitHub. The owner opens every pull request. Tools can add attribution to what agents post on GitHub, and repository rules cannot turn it off.
-- Draft the pull request title and description for the owner from the repository's template, following `CONTRIBUTING.md`: Summary, Jira, and Testing always, other sections only when relevant.
+- Give the owner the pull request title, following `CONTRIBUTING.md`. Do not draft a description.
 - CI runs when the owner opens the pull request, so report it as not yet run. When asked to look at a pull request's checks, read them, fix failures the change caused, and push to the branch.
 
 ## Confluence
@@ -127,7 +127,7 @@ Each repository's `CLAUDE.md` names its space and page map.
 End every repository task with a brief report:
 
 - What changed (1–3 bullets)
-- The branch, a compare link (`https://github.com/<owner>/<repo>/compare/<default-branch>...<branch>?expand=1`), and the pull request title and description, ready to paste
+- The branch, a compare link (`https://github.com/<owner>/<repo>/compare/<default-branch>...<branch>?expand=1`), and the pull request title
 - Local check results, and anything not verified
 - Jira changes (ticket, status change, comment summary), or "none"
 - Assumptions made, and any branch-name mismatch
