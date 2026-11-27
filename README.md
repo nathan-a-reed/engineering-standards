@@ -23,8 +23,10 @@ Shared engineering standards and repository templates for every `nathan-a-reed` 
 | `standards/security.md` | `docs/standards/` | Secrets, access, data protection, edge, AI features, supply chain |
 | `standards/python.md` | `docs/standards/` | Lambda functions |
 | `standards/frontend.md` | `docs/standards/` | Astro and React applications, design system |
+| `templates/.github/pull_request_template.md` | `.github/` | Pull request template |
+| `templates/.github/workflows/pr-hygiene.yml` | `.github/workflows/` | Caller for the shared `PR hygiene` workflow, pinned to a commit SHA |
 | `templates/` | Various | Starting files and setup checklist for new repositories |
 
 ## Changing a standard
 
-Open a pull request here. After it merges, sync the changed files to each repository in a `docs:` pull request. Synced copies are never edited in place.
+Open a pull request here. After it merges, the standards sync opens a `docs: sync engineering standards` pull request in each project repository whose copies differ; see [ADR 0001](docs/adr/0001-automate-standards-sync.md). Synced copies are never edited in place. To run the sync again, start the `Standards sync` workflow manually.

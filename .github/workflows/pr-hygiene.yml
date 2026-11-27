@@ -1,8 +1,11 @@
 name: PR hygiene
 
+# Project repositories call this workflow through the caller in templates/.github/workflows/,
+# which the standards sync pins to a commit SHA.
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
+  workflow_call:
 
 permissions:
   contents: read
