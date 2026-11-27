@@ -1,0 +1,101 @@
+name: Standards sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - CONTRIBUTING.md
+      - SECURITY.md
+      - standards/**
+      - templates/.github/workflows/pr-hygiene.yml
+      - .github/workflows/pr-hygiene.yml
+      - .github/workflows/sync-standards.yml
+      - scripts/sync-standards.sh
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: standards-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync ${{ matrix.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        repository: [aws-foundation, nasa-rag, outage-atlas, portfolio-site]
+    steps:
+      - name: Check out engineering-standards
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: source
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Create app token
+        id: app-token
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
+        with:
+          client-id: ${{ vars.SYNC_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SYNC_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ matrix.repository }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-workflows: write
+
+      - name: Check out ${{ matrix.repository }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ github.repository_owner }}/${{ matrix.repository }}
+          token: ${{ steps.app-token.outputs.token }}
+          path: target
+
+      - name: Copy synced files
+        id: copy
+        working-directory: target
+        run: |
+          workflow_sha=$(git -C ../source log -1 --format=%H -- .github/workflows/pr-hygiene.yml)
+          ../source/scripts/sync-standards.sh ../source . "$workflow_sha"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff --cached --stat
+          fi
+
+      - name: Open or update the sync pull request
+        if: steps.copy.outputs.changed == 'true'
+        working-directory: target
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
+          TARGET_REPO: ${{ github.repository_owner }}/${{ matrix.repository }}
+          SOURCE_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+        run: |
+          branch=docs/sync-engineering-standards
+          title='docs: sync engineering standards'
+          base=$(git rev-parse --abbrev-ref HEAD)
+          bot_id=$(gh api "users/${APP_SLUG}[bot]" --jq .id)
+          git config user.name "${APP_SLUG}[bot]"
+          git config user.email "${bot_id}+${APP_SLUG}[bot]@users.noreply.github.com"
+
+          git checkout -B "$branch"
+          git commit -q -m "$title" -m "Source: $SOURCE_URL"
+          # The bot owns this branch and rebuilds it from the default branch on every run.
+          git push --force origin "$branch"
+
+          echo "Syncs \`CONTRIBUTING.md\`, \`SECURITY.md\`, \`docs/standards/\`, and the \`PR hygiene\` caller from $SOURCE_URL." > "$RUNNER_TEMP/body.md"
+
+          number=$(gh pr list --repo "$TARGET_REPO" --head "$branch" --state open --json number --jq '.[0].number // empty')
+          if [[ -n $number ]]; then
+            gh pr edit "$number" --repo "$TARGET_REPO" --title "$title" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr create --repo "$TARGET_REPO" --base "$base" --head "$branch" --title "$title" --body-file "$RUNNER_TEMP/body.md"
+          fi

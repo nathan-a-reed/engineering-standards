@@ -35,9 +35,9 @@ Issue types: Epic, Story, Task, Bug, Feature, Subtask
 ## Conventions
 
 - Commit scopes: `standards`, `templates`, `ci`, `docs`
-- Changes to `CONTRIBUTING.md`, `SECURITY.md`, or `standards/` are followed by sync pull requests in each project repository that carries the changed files.
+- After a merge to `main`, the standards sync (`.github/workflows/sync-standards.yml`) opens a `docs: sync engineering standards` pull request in each project repository whose copies differ. New project repositories are added to its matrix and to the sync app's installation.
 - Files in `templates/` stay generic: placeholders use the `<…>` form.
-- Root-level `.github/` and `.claude/` files mirror `templates/`. Update both together.
+- Root-level `.github/` and `.claude/` files mirror `templates/`. Update both together. The exception is `.github/workflows/pr-hygiene.yml`: the root file is the shared workflow, and the template is the caller that project repositories use.
 
 ## Pull requests
 
